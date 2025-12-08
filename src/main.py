@@ -13,7 +13,7 @@ def main():
         
     print(f"📍 Location: {location['city']}, {location['country']}")
 
-    weather = get_weather(location["lat"], location["lon"])
+    weather = get_weather()
     if not weather:
         print("❌ Could not get weather data")
         return

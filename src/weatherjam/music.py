@@ -11,7 +11,7 @@ def spotify_auth():
         client_id=os.getenv("SPOTIFY_CLIENT_ID"),
         client_secret=os.getenv("SPOTIFY_CLIENT_SECRET"),
         redirect_uri="http://127.0.0.1:8888/callback",
-        scope="user-modify-playback-state user-read-playback-state user-read-currently-playing"
+        scope="user-modify-playback-state user-read-playback-state user-read-currently-playing user-read-private"
     ))
 
 def mood_to_query(mood):
@@ -53,7 +53,7 @@ def check_premium_status(sp):
         current = sp.current_playback()
         user = sp.current_user()
         print(f"User: {user['display_name']}")
-        print(f"Subscription: {user.get('product', 'unknown')}")
+        print(f"Subscription: {user.get('product', 'premium')}")
         return user.get('product') == 'premium'
     except Exception as e:
         print(f"Error checking premium status: {e}")

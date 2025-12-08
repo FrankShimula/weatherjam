@@ -4,23 +4,23 @@ from dotenv import load_dotenv
 load_dotenv()
 
 
-def get_weather(lat, lon):
+def get_weather():
     key = os.getenv("TOMORROW_API_KEY")
-    url = f"https://api.tomorrow.io/v4/weather/realtime?location={lat},{lon}&apikey={key}"
+    url = f"http://api.weatherapi.com/v1/current.json?key={key}&q=Paris&aqi=no"
     
     try:
         res = requests.get(url, timeout=10)
         res.raise_for_status()  # Raises an HTTPError for bad responses
         data = res.json()
         
-        if 'data' not in data or 'values' not in data['data']:
+        if 'current' not in data:
             print(f"Unexpected API response format: {data}")
             return None
             
-        values = data["data"]["values"]
+        current = data["current"]
         return {
-            "condition": str(values["weatherCode"]),
-            "temp": values["temperature"]
+            "condition": str(current["condition"]["code"]),
+            "temp": current["temp_c"]
         }
     except requests.exceptions.RequestException as e:
         print(f"Weather API request failed: {e}")
@@ -62,6 +62,7 @@ def weather_to_mood(weather):
         "1101": "indie",    # Partly Cloudy
         "1102": "indie",    # Mostly Cloudy
         "1001": "indie",    # Cloudy
+        "1009": "indie",    # Overcast
         
         # Fog
         "2000": "ambient",  # Fog
