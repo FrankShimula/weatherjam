@@ -6,7 +6,7 @@ load_dotenv()
 
 def get_weather():
     key = os.getenv("TOMORROW_API_KEY")
-    url = f"http://api.weatherapi.com/v1/current.json?key={key}&q=Paris&aqi=no"
+    url = f"http://api.weatherapi.com/v1/current.json?key={key}&q=SWI&aqi=no"
     
     try:
         res = requests.get(url, timeout=10)
